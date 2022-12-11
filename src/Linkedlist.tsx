@@ -1,16 +1,12 @@
-import React, { useCallback, useState } from "react";
-// getByIndex emplement
-// deleteElement
-// findeByValue
+import React, { useCallback, useEffect, useState } from "react";
+
 
 const LinkedlistApp = () => {
-  // randomGenerator
 
   const generageRandomNumber = () => {
     return Math.floor(Math.random() * 100);
   };
 
-  // Node of list
   class Node<T, K> {
     value: T;
     next?: K;
@@ -91,11 +87,9 @@ const LinkedlistApp = () => {
 
   const minusEmployer = useCallback(() => {}, []);
 
-  
-  const bubbleSort = useCallback(() => {
+  useEffect(() => {
     listOfElements.bubbleSort();
-    
-  }, [listOfElements]);
+  }, [listOfElements, listOfElements.toArray]);
 
   const plusEmployer = useCallback(() => {
     setListOfElements(listOfElements.appendItem(generageRandomNumber()));
@@ -103,10 +97,7 @@ const LinkedlistApp = () => {
   }, [listOfElements, setCalc, calc]);
 
   const Updated = () => {
-    return(
-    <div>
-      <h1>Sorted!</h1>
-    </div>)
+    return <div>Sorted!</div>;
   };
 
   return (
@@ -119,20 +110,20 @@ const LinkedlistApp = () => {
         </div>
         <div>
           <span>Linked List</span>
-          {
-            listOfElements.toArray().map((element: any, key: number) => {
-              return (
-                <li>
-                  {JSON.stringify(element.value)} in {key}
-                  {/* {JSON.stringify(element)} in {key} */}
-                </li>
-              );
-            })
-            //testArray.map((e: any)=>{return e})
-            //JSON.stringify(listOfElements)
-          }
+          <div id="main">
+            {
+              listOfElements.toArray().map((element: any, key: number) => {
+                return (
+                  <li key={key}>
+                    {JSON.stringify(element.value)} in {key}
+                    {/* {JSON.stringify(element)} in {key} */}
+                  </li>
+                );
+              })
+            }
+          </div>
         </div>
-        <button onClick={bubbleSort}>SORT List by bubble method</button>
+        <button onClick={() => {listOfElements.bubbleSort()}}>SORT List by bubble method</button>
         <Updated />
       </div>
     </>
