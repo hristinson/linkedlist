@@ -134,7 +134,7 @@ const LinkedlistApp = () => {
         <div>
           <span>Linked List</span>
           <div id="main">
-            {listOfElements.toArray().map((element: any, key: number) => {
+            {listOfElements.toArray().map((element, key: number) => {
               return (
                 <li key={key}>
                   {/* {JSON.stringify(element.value)} */}
