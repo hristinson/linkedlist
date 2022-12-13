@@ -1,8 +1,19 @@
 import React, { useCallback, useState, useMemo } from "react";
 
+// let x: { name: string };
+// let y: { name: string; age: number };
+// let z: any = { name: `Fred`, lastname: `Godzila`, age: 34 };
+
+//x = { name: `Ted` };
+//y = { name: `Bobo`, age: 45 };
+//x = z;
+//y = z;
+//x = y;
+// y = x; ERROR
+
 const LinkedlistApp = () => {
   const generageRandomNumber = () => {
-    return Math.floor(Math.random() * 50);
+    return Math.floor(Math.random() * 5);
   };
 
   class Node<T> {
@@ -29,20 +40,38 @@ const LinkedlistApp = () => {
     }
 
     minusEmployer() {
-      if (!this.head) {
-        return null;
+      if (this.head?.value === 0) {
+        this.head = this.head.next as any;
       }
-      let deletedNode = null;
+      //   const value = 0;
+      //   if (!this.head) {
+      //     return;
+      //   }
+      // //  let deletedNode = null;
 
-      //while (this.head)
+      // while (this.head && this.head.value === value) {
+      //   deletedNode = this.head;
+      //   this.head = this.head.next;
+      //   debugger;
+      // }
 
-      // let currentNode = this.head;
-      // let deletedNode =
-      // while (currentNode) {
-      //   if (!currentNode.next) {
-      //     currentNode.next = null;
+      // let currentNode = this.head?.next;
+
+      // if (currentNode !== null) {
+      //   while (currentNode?.next) {
+      //     debugger;
+      //     if (currentNode.next.value === value) {
+      //       deletedNode = currentNode.next;
+      //       currentNode.next = currentNode.next.next;
+      //     } else {
+      //       currentNode = currentNode.next;
+      //     }
       //   }
       // }
+      // if (this.tail?.value === value) {
+      //   this.tail = currentNode as any;
+      // }
+      return this;
     }
 
     bubbleSort() {
@@ -103,7 +132,10 @@ const LinkedlistApp = () => {
   const [listOfElements, setListOfElements] = useState(new LinkedList());
   const [calc, setCalc] = useState(0);
 
-  const minusEmployer = useCallback(() => {}, []);
+  const minusEmployer = useCallback(() => {
+    setListOfElements(listOfElements.minusEmployer() as any);
+    setCalc(calc + 1);
+  }, [setListOfElements, listOfElements, calc]);
 
   const bubbleSort = useCallback(() => {
     setListOfElements(listOfElements.bubbleSort());
@@ -117,7 +149,7 @@ const LinkedlistApp = () => {
 
   const memoisedValue = useMemo(() => {
     return generageRandomNumber();
-  }, [minusEmployer]);
+  }, []);
 
   const Updated = () => {
     return <div>{memoisedValue}</div>;
@@ -134,11 +166,11 @@ const LinkedlistApp = () => {
         <div>
           <span>Linked List</span>
           <div id="main">
-            {listOfElements.toArray().map((element, key: number) => {
+            {listOfElements.toArray().map((element: any, key: number) => {
               return (
                 <li key={key}>
-                  {/* {JSON.stringify(element.value)} */}
-                  {JSON.stringify(element)} in {key}
+                  {JSON.stringify(element.value)}
+                  {/* {JSON.stringify(element)} in {key} */}
                 </li>
               );
             })}
