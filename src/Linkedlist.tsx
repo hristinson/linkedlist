@@ -13,7 +13,7 @@ import React, { useCallback, useState, useMemo } from "react";
 
 const LinkedlistApp = () => {
   const generageRandomNumber = () => {
-    return Math.floor(Math.random() * 5);
+    return Math.floor(Math.random() * 100);
   };
 
   class Node<T> {
@@ -85,10 +85,8 @@ const LinkedlistApp = () => {
         let inneTrigger = false;
         while (currentNode) {
           if (currentNode.next && currentNode.value > currentNode.next.value) {
-            [currentNode.next.value, currentNode.value] = [
-              currentNode.value,
-              currentNode.next.value,
-            ];
+            [currentNode.next.value, currentNode.value] = [currentNode.value, currentNode.next.value];
+            [currentNode.next.text, currentNode.text] = [currentNode.text, currentNode.next.text];
             inneTrigger = true;
           }
 
@@ -133,6 +131,13 @@ const LinkedlistApp = () => {
 
   const [listOfElements, setListOfElements] = useState(new LinkedList());
   const [calc, setCalc] = useState(0);
+  const [text, setText] = useState<string>(``);
+
+  const textAreaChange = useCallback((textIn: any, textOld: any) => {
+    //setText(`${text + textIn.nativeEvent.data}`);
+    setText(textIn + textOld.data);
+    console.log(textOld.data);
+  }, []);
 
   const minusEmployer = useCallback(() => {
     setListOfElements(listOfElements.minusEmployer() as any);
@@ -168,13 +173,14 @@ const LinkedlistApp = () => {
         <div>
           <button onClick={minusEmployer}>- Element</button>
           <span>Counter of elelments - {calc}</span>
-          <button
-            onClick={() => {
-              plusEmployer(`samael`);
+          <input
+            value={text}
+            onChange={(event) => {
+              textAreaChange(text, event.nativeEvent);
             }}
-          >
-            + Element
-          </button>
+          />
+          <button onClick={() => {plusEmployer(text); }}> + Element</button>
+          <button onClick={ () => {setText(``)}}> - CLEAR </button>
         </div>
         <div>
           <span>Linked List</span>
