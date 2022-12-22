@@ -93,11 +93,7 @@ const LinkedlistApp = () => {
       if(element < arrayOfElements[mid]?.value) {arrayOfElements = arrayOfElements.slice(0, mid);}
       mid = Math.floor(arrayOfElements?.length / 2);
         }
-      
-      console.log(arrayOfElements);
-      
-      return this;
-
+    return this;
     }
 
     deleteEmployer(value: number, text: string) {
