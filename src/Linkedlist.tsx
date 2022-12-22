@@ -1,4 +1,6 @@
 import React, { useCallback, useState, useMemo } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button, Alert } from "react-bootstrap";
 
 // let x: { name: string };
 // let y: { name: string; age: number };
@@ -14,6 +16,29 @@ import React, { useCallback, useState, useMemo } from "react";
 const LinkedlistApp = () => {
   const generageRandomNumber = () => {
     return Math.floor(Math.random() * 100);
+  };
+
+  const getRandomName = () => {
+    const arrayOfNames = [
+      `Samael`,
+      `Rafael`,
+      `Zoltar`,
+      `Gabriel`,
+      `Parfenon`,
+      `Solomon`,
+      `SiDzenPin`,
+      `Yohan`,
+      `Pikachu`,
+      `Pokemon`,
+      `Philimon`,
+      `Tokio`,
+    ];
+
+    const generageRandomNumber = () => {
+      return Math.floor(Math.random() * 11);
+    };
+
+    return arrayOfNames[generageRandomNumber()];
   };
 
   class Node<T> {
@@ -41,8 +66,34 @@ const LinkedlistApp = () => {
       this.tail = undefined;
     }
 
+    deleteEmployer(value: number, text: string) {
+      let currentNode = this.head;
+      while (currentNode) {
+       
+        if (currentNode.value === value && currentNode.text === text) this.head = currentNode.next
+        if (currentNode.next?.value === value && currentNode.next.text === text) {
+          if (currentNode.next.next) currentNode.next = currentNode.next.next;
+          else {
+          currentNode.next = null
+          this.tail = currentNode;
+          }
+        console.log(currentNode);
+        
+        }
+        
+        // if (currentNode.next === null) {
+        //   currentNode = null;
+        //   console.log(currentNode);
+        // }
+        
+        //if (currentNode?.next) currentNode = currentNode?.next;
+        currentNode = currentNode.next
+      }
+      return this;
+    }
+
     minusEmployer() {
-      if (this.head?.value === 0) {
+      if (this.head?.value) {
         this.head = this.head.next as any;
       }
       //   const value = 0;
@@ -85,8 +136,14 @@ const LinkedlistApp = () => {
         let inneTrigger = false;
         while (currentNode) {
           if (currentNode.next && currentNode.value > currentNode.next.value) {
-            [currentNode.next.value, currentNode.value] = [currentNode.value, currentNode.next.value];
-            [currentNode.next.text, currentNode.text] = [currentNode.text, currentNode.next.text];
+            [currentNode.next.value, currentNode.value] = [
+              currentNode.value,
+              currentNode.next.value,
+            ];
+            [currentNode.next.text, currentNode.text] = [
+              currentNode.text,
+              currentNode.next.text,
+            ];
             inneTrigger = true;
           }
 
@@ -134,15 +191,22 @@ const LinkedlistApp = () => {
   const [text, setText] = useState<string>(``);
 
   const textAreaChange = useCallback((textIn: any, textOld: any) => {
-    //setText(`${text + textIn.nativeEvent.data}`);
     setText(textIn + textOld.data);
-    console.log(textOld.data);
   }, []);
 
   const minusEmployer = useCallback(() => {
     setListOfElements(listOfElements.minusEmployer() as any);
     setCalc(calc + 1);
   }, [setListOfElements, listOfElements, calc]);
+
+  const deleteEmployer = useCallback(
+    (value: number, text: string) => {
+      listOfElements.deleteEmployer(value, text);
+      //alert(`Emploer number ${value} with ${text} name is terminated`);
+      setCalc(calc + 1);
+    },
+    [listOfElements, calc]
+  );
 
   const bubbleSort = useCallback(() => {
     setListOfElements(listOfElements.bubbleSort());
@@ -154,6 +218,7 @@ const LinkedlistApp = () => {
       setListOfElements(
         listOfElements.appendItem(generageRandomNumber(), text)
       );
+      setText(``);
       setCalc(calc + 1);
     },
     [listOfElements, setCalc, calc]
@@ -171,32 +236,73 @@ const LinkedlistApp = () => {
     <>
       <div>
         <div>
-          <button onClick={minusEmployer}>- Element</button>
-          <span>Counter of elelments - {calc}</span>
+          <Button variant="primary" onClick={minusEmployer}>
+            - last Element
+          </Button>
+          Name of new employer
           <input
             value={text}
             onChange={(event) => {
               textAreaChange(text, event.nativeEvent);
             }}
           />
-          <button onClick={() => {plusEmployer(text); }}> + Element</button>
-          <button onClick={ () => {setText(``)}}> - CLEAR </button>
+          <Button
+            onClick={() => {
+              plusEmployer(text);
+            }}
+          >
+            + Element
+          </Button>
+          <Button
+            onClick={() => {
+              setText(``);
+            }}
+          >
+            - CLEAR
+          </Button>
+          <Button
+            onClick={() => {
+              plusEmployer(getRandomName());
+            }}
+          >
+            - RandomEmployer
+          </Button>
         </div>
+        <br></br>
         <div>
-          <span>Linked List</span>
           <div id="main">
-            {listOfElements.toArray().map((element: any, key: number) => {
-              return (
-                <li key={key}>
-                  {JSON.stringify(element.value)} -
-                  {JSON.stringify(element.text)}
-                  {/* {JSON.stringify(element)} in {key} */}
-                </li>
-              );
-            })}
+            <div className="tableMain">
+              {listOfElements.toArray().map((element: any, key: number) => {
+                return (
+                  <div className="tableMain" key={key}>
+                    <li key={key}>
+                      <div>
+                        <Alert variant={`secondary`}>
+                          {JSON.stringify(element.value)}
+                        </Alert>
+                      </div>
+                      <div>
+                        <Alert variant={`dark`}>
+                          {JSON.stringify(element.text)}
+                          {/* {JSON.stringify(element)} in {key} */}
+                        </Alert>
+                        <Button
+                          variant="danger"
+                          onClick={() => {
+                            deleteEmployer(element.value, element.text);
+                          }}
+                        >
+                          terminate
+                        </Button>
+                      </div>
+                    </li>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-        <button onClick={bubbleSort}>SORT List by bubble method</button>
+        <Button onClick={bubbleSort}>SORT List by bubble method</Button>
         <Updated />
       </div>
     </>
