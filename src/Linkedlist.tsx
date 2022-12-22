@@ -85,9 +85,15 @@ const LinkedlistApp = () => {
         currentNode = currentNode.next;
         q++
       }
+      let mid = Math.floor(arrayOfElements.length / 2);
+       while(arrayOfElements) {
 
-      while(arrayOfElements)
-
+      if(element == arrayOfElements[mid]?.value) {alert(`Goal! ${arrayOfElements[mid].text}`); return;}
+      if(element > arrayOfElements[mid]?.value) {arrayOfElements = arrayOfElements.slice(mid);}
+      if(element < arrayOfElements[mid]?.value) {arrayOfElements = arrayOfElements.slice(0, mid);}
+      mid = Math.floor(arrayOfElements?.length / 2);
+        }
+      
       console.log(arrayOfElements);
       
       return this;
