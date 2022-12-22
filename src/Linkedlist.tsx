@@ -18,11 +18,13 @@ const LinkedlistApp = () => {
 
   class Node<T> {
     value: T;
+    text: any;
     next: Node<T> | null;
 
-    constructor(value: T, next = null) {
+    constructor(value: T, text: any, next = null) {
       this.value = value;
       this.next = next;
+      this.text = text;
     }
 
     item() {
@@ -101,8 +103,8 @@ const LinkedlistApp = () => {
       return this;
     }
 
-    appendItem(value: K) {
-      const newNode = new Node(value);
+    appendItem(value: K, text: any) {
+      const newNode = new Node(value, text);
 
       if (!this.head || !this.tail) {
         this.head = newNode;
@@ -142,10 +144,15 @@ const LinkedlistApp = () => {
     setCalc(calc + 1);
   }, [setListOfElements, listOfElements, calc]);
 
-  const plusEmployer = useCallback(() => {
-    setListOfElements(listOfElements.appendItem(generageRandomNumber()));
-    setCalc(calc + 1);
-  }, [listOfElements, setCalc, calc]);
+  const plusEmployer = useCallback(
+    (text: any) => {
+      setListOfElements(
+        listOfElements.appendItem(generageRandomNumber(), text)
+      );
+      setCalc(calc + 1);
+    },
+    [listOfElements, setCalc, calc]
+  );
 
   const memoisedValue = useMemo(() => {
     return generageRandomNumber();
@@ -161,7 +168,13 @@ const LinkedlistApp = () => {
         <div>
           <button onClick={minusEmployer}>- Element</button>
           <span>Counter of elelments - {calc}</span>
-          <button onClick={plusEmployer}>+ Element</button>
+          <button
+            onClick={() => {
+              plusEmployer(`samael`);
+            }}
+          >
+            + Element
+          </button>
         </div>
         <div>
           <span>Linked List</span>
@@ -169,7 +182,8 @@ const LinkedlistApp = () => {
             {listOfElements.toArray().map((element: any, key: number) => {
               return (
                 <li key={key}>
-                  {JSON.stringify(element.value)}
+                  {JSON.stringify(element.value)} -
+                  {JSON.stringify(element.text)}
                   {/* {JSON.stringify(element)} in {key} */}
                 </li>
               );
