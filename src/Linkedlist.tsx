@@ -75,6 +75,25 @@ const LinkedlistApp = () => {
       this.tail = undefined;
     }
 
+    binarySearch (element: string) {
+      let arrayOfElements = []
+      let q = 0
+      let currentNode = this.head;
+
+      while (currentNode) {
+        arrayOfElements[q] = currentNode;
+        currentNode = currentNode.next;
+        q++
+      }
+
+      while(arrayOfElements)
+
+      console.log(arrayOfElements);
+      
+      return this;
+
+    }
+
     deleteEmployer(value: number, text: string) {
       let currentNode = this.head;
       while (currentNode) {
@@ -187,9 +206,14 @@ const LinkedlistApp = () => {
     [listOfElements, calc]
   );
 
-  const bubbleSort = useCallback(() => {
+  const bubbleSort = useCallback((element?: string) => {
     setListOfElements(listOfElements.bubbleSort());
     setCalc(calc + 1);
+
+    if(element) {
+      listOfElements.binarySearch(element);
+    }
+
   }, [setListOfElements, listOfElements, calc]);
 
   const plusEmployer = useCallback(
@@ -281,7 +305,7 @@ const LinkedlistApp = () => {
             </div>
           </div>
         </div>
-        <Button onClick={bubbleSort}>SORT List by bubble method</Button>
+        <Button onClick={() => {bubbleSort()}}>SORT List by bubble method</Button>
         <InputGroup />
         <input
           value={findIndex}
@@ -294,7 +318,7 @@ const LinkedlistApp = () => {
         ></input>
         <Button
           onClick={() => {
-            alert(findIndex);
+            bubbleSort(findIndex);
           }}
         >
           Terminate emploeyr by ID
