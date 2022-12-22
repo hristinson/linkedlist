@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useMemo } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Alert } from "react-bootstrap";
+import { Button, Alert, InputGroup } from "react-bootstrap";
 
 // let x: { name: string };
 // let y: { name: string; age: number };
@@ -24,6 +24,8 @@ const LinkedlistApp = () => {
       `Rafael`,
       `Zoltar`,
       `Gabriel`,
+      `Daniel`,
+      `Michael`,
       `Parfenon`,
       `Solomon`,
       `SiDzenPin`,
@@ -32,10 +34,17 @@ const LinkedlistApp = () => {
       `Pokemon`,
       `Philimon`,
       `Tokio`,
+      `Barel`,
+      `Morti`,
+      `Rik`,
+      `Sandra`,
+      `Arnold`,
+      `Omega`,
+      `Delta`,
     ];
 
     const generageRandomNumber = () => {
-      return Math.floor(Math.random() * 11);
+      return Math.floor(Math.random() * 20);
     };
 
     return arrayOfNames[generageRandomNumber()];
@@ -69,19 +78,20 @@ const LinkedlistApp = () => {
     deleteEmployer(value: number, text: string) {
       let currentNode = this.head;
       while (currentNode) {
-       
-        if (currentNode.value === value && currentNode.text === text) this.head = currentNode.next
-        if (currentNode.next?.value === value && currentNode.next.text === text) {
+        if (currentNode.value === value && currentNode.text === text)
+          this.head = currentNode.next;
+        if (
+          currentNode.next?.value === value &&
+          currentNode.next.text === text
+        ) {
           if (currentNode.next.next) currentNode.next = currentNode.next.next;
           else {
-          currentNode.next = null
-          this.tail = currentNode;
+            currentNode.next = null;
+            this.tail = currentNode;
           }
-        console.log(currentNode);
-        
         }
-       
-        currentNode = currentNode.next
+
+        currentNode = currentNode.next;
       }
       return this;
     }
@@ -90,12 +100,11 @@ const LinkedlistApp = () => {
       if (this.head?.value) {
         this.head = this.head.next as any;
       }
-    
+
       return this;
     }
 
     bubbleSort() {
-
       let currentNode = this.head;
       let trigger = true;
 
@@ -115,7 +124,6 @@ const LinkedlistApp = () => {
           }
 
           currentNode = currentNode.next;
-          console.log(trigger);
         }
 
         if (!inneTrigger) trigger = false;
@@ -156,9 +164,14 @@ const LinkedlistApp = () => {
   const [listOfElements, setListOfElements] = useState(new LinkedList());
   const [calc, setCalc] = useState(0);
   const [text, setText] = useState<string>(``);
+  const [findIndex, setFindIndex] = useState<string>(``);
 
   const textAreaChange = useCallback((textIn: any, textOld: any) => {
     setText(textIn + textOld.data);
+  }, []);
+
+  const findeIndexChange = useCallback((textIn: any, textOld: any) => {
+    setFindIndex(textIn + textOld.data);
   }, []);
 
   const minusEmployer = useCallback(() => {
@@ -217,7 +230,7 @@ const LinkedlistApp = () => {
               plusEmployer(text);
             }}
           >
-            + Element
+            + Emploer
           </Button>
           <Button
             onClick={() => {
@@ -244,7 +257,7 @@ const LinkedlistApp = () => {
                     <li key={key}>
                       <div>
                         <Alert variant={`secondary`}>
-                          {JSON.stringify(element.value)}
+                          ID - {JSON.stringify(element.value)}
                         </Alert>
                       </div>
                       <div>
@@ -269,6 +282,23 @@ const LinkedlistApp = () => {
           </div>
         </div>
         <Button onClick={bubbleSort}>SORT List by bubble method</Button>
+        <InputGroup />
+        <input
+          value={findIndex}
+          onClick={() => {
+            setFindIndex(``);
+          }}
+          onChange={(event) => {
+            findeIndexChange(findIndex, event.nativeEvent);
+          }}
+        ></input>
+        <Button
+          onClick={() => {
+            alert(findIndex);
+          }}
+        >
+          Terminate emploeyr by ID
+        </Button>
         <Updated />
       </div>
     </>
