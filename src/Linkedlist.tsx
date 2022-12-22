@@ -80,13 +80,7 @@ const LinkedlistApp = () => {
         console.log(currentNode);
         
         }
-        
-        // if (currentNode.next === null) {
-        //   currentNode = null;
-        //   console.log(currentNode);
-        // }
-        
-        //if (currentNode?.next) currentNode = currentNode?.next;
+       
         currentNode = currentNode.next
       }
       return this;
@@ -96,39 +90,12 @@ const LinkedlistApp = () => {
       if (this.head?.value) {
         this.head = this.head.next as any;
       }
-      //   const value = 0;
-      //   if (!this.head) {
-      //     return;
-      //   }
-      // //  let deletedNode = null;
-
-      // while (this.head && this.head.value === value) {
-      //   deletedNode = this.head;
-      //   this.head = this.head.next;
-      //   debugger;
-      // }
-
-      // let currentNode = this.head?.next;
-
-      // if (currentNode !== null) {
-      //   while (currentNode?.next) {
-      //     debugger;
-      //     if (currentNode.next.value === value) {
-      //       deletedNode = currentNode.next;
-      //       currentNode.next = currentNode.next.next;
-      //     } else {
-      //       currentNode = currentNode.next;
-      //     }
-      //   }
-      // }
-      // if (this.tail?.value === value) {
-      //   this.tail = currentNode as any;
-      // }
+    
       return this;
     }
 
     bubbleSort() {
-      //let currentNode = this.head as Node<K> | null; // ????????????????????????????????????????????????
+
       let currentNode = this.head;
       let trigger = true;
 
@@ -175,7 +142,7 @@ const LinkedlistApp = () => {
     }
 
     toArray() {
-      const arrayOfNodes = [] as Array<K>; // return array of T
+      const arrayOfNodes = [] as Array<K>;
       let currentNode = this.head;
 
       while (currentNode) {
@@ -202,7 +169,6 @@ const LinkedlistApp = () => {
   const deleteEmployer = useCallback(
     (value: number, text: string) => {
       listOfElements.deleteEmployer(value, text);
-      //alert(`Emploer number ${value} with ${text} name is terminated`);
       setCalc(calc + 1);
     },
     [listOfElements, calc]
