@@ -116,7 +116,7 @@ const LinkedlistApp = () => {
       }
       return this;
     }
-
+// 001
     minusEmployer() {
       if (this.head?.value) {
         this.head = this.head.next as any;
@@ -153,7 +153,7 @@ const LinkedlistApp = () => {
 
       return this;
     }
-
+// 002
     appendItem(value: K, text: any) {
       const newNode = new Node(value, text);
 
@@ -190,7 +190,7 @@ const LinkedlistApp = () => {
   const textAreaChange = useCallback((textIn: any, textOld: any) => {
     setText(textIn + textOld.data);
   }, []);
-
+//003
   const findeIndexChange = useCallback((textIn: any, textOld: any) => {
     setFindIndex(textIn + textOld.data);
   }, []);
